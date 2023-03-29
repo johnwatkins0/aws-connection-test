@@ -1,0 +1,6 @@
+{
+    "name": "johnwatkins/aws-connection-test",
+    "require": {
+        "aws/aws-sdk-php": "^3.262"
+    }
+}
