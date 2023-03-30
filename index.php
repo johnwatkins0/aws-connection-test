@@ -19,6 +19,8 @@ class S3ConnectionTest {
         if ( isset( $argv[2] ) ) {
             $connection_parameters = [
                 'roleArn' => $argv[2],
+                'region' => 'us-west-1',
+                'version'   => '2006-03-01',
             ];
         } else {
             $connection_parameters = [
@@ -78,7 +80,7 @@ class S3ConnectionTest {
 		$bucket_name = sprintf( 'wpsnapshots-%s', $repository );
 
         try {
-            $this->client->listObjects( [ 'Bucket' => $bucket_name ] );
+            return $this->client->listBuckets();
         } catch ( Exception $e ) {
             echo $e->getMessage();
         }
@@ -86,4 +88,6 @@ class S3ConnectionTest {
 }
 
 $credentials_loader = new S3ConnectionTest();
-$credentials_loader->test( $argv[1] );
+foreach ($credentials_loader->test( $argv[1] )['Buckets'] as $item) {
+    printf("%s\n", $item['Name']);
+};
